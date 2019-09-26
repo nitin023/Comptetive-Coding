@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class  TraversalUtil {
 
@@ -64,6 +65,31 @@ public class  TraversalUtil {
             if(treeNode.getRight()!=null)
             {
                 treeNodeList.add(treeNode.getRight());
+            }
+        }
+    }
+
+    public static void getInorderIterativeTraversal(TreeNode root)
+    {
+        if(root==null)
+        {
+            return;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node!=null || !stack.isEmpty())
+        {
+            if(node!=null)
+            {
+                stack.push(node);
+                node = node.left;
+            }
+            else
+            {
+               node = stack.pop();
+               System.out.print(node.getData() + " ");
+               node = node.right;
             }
         }
     }

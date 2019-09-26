@@ -34,5 +34,15 @@ public class Main {
         root2.left.right.right = new TreeNode(7);
 
         TraversalUtil.levelOrderTraversal(root2);
+        System.out.println();
+        TreeNode root3 = new TreeNode(1);
+        root3.left = new TreeNode(2);
+        root3.left.left = new TreeNode(3);
+        root3.left.right = new TreeNode(4);
+        root3.left.left.left= new TreeNode(7);
+
+        root3.right = new TreeNode(5);
+        root3.right.right = new TreeNode(6);
+        TraversalUtil.getInorderIterativeTraversal(root3);
     }
 }
