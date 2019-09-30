@@ -1,48 +1,22 @@
-
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 public class Main {
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        root.left = (new TreeNode(2));
-        root.right =  (new TreeNode(3));
 
-        root.left.left = new TreeNode(4);
-        root.left.right = new TreeNode(5);
+        TreeNode node = new TreeNode(4);
+        node.left = new TreeNode(2);
+        node.right = new TreeNode(7);
+        node.left.left = new TreeNode(1);
+        node.left.right = new TreeNode(3);
 
-        TraversalUtil.getPreOrderTraversal(root);
-        System.out.println();
-
-        TreeNode root1 = new TreeNode(1);
-        root1.left = (new TreeNode(2));
-        root1.right =  (new TreeNode(5));
-
-        root1.left.left = new TreeNode(3);
-        root1.left.right = new TreeNode(4);
-        TraversalUtil.getInOrderTraversal(root1);
-        System.out.println();
-        TraversalUtil.getPostOrderTraversal(root1);
-        System.out.println();
-
-        TreeNode root2 = new TreeNode(1);
-        root2.left = new TreeNode(2);
-        root2.right = new TreeNode(3);
-        root2.left.left = new TreeNode(4);
-        root2.left.right = new TreeNode(5);
-        root2.right.right = new TreeNode(8);
-        root2.right.right.right = new TreeNode(9);
-        root2.left.left.left = new TreeNode(6);
-        root2.left.right.right = new TreeNode(7);
-
-        TraversalUtil.levelOrderTraversal(root2);
-        System.out.println();
-        TreeNode root3 = new TreeNode(1);
-        root3.left = new TreeNode(2);
-        root3.left.left = new TreeNode(3);
-        root3.left.right = new TreeNode(4);
-        root3.left.left.left= new TreeNode(7);
-
-        root3.right = new TreeNode(5);
-        root3.right.right = new TreeNode(6);
-        TraversalUtil.getInorderIterativeTraversal(root3);
+        TreeNode findNode = TraversalUtil.searchBST(node,1);
+        if(findNode!=null)
+        {
+            System.out.println(findNode.getData());
+        }
+        else
+        {
+            System.out.println("not found");
+        }
     }
 }
