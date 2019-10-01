@@ -1,4 +1,3 @@
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,10 +8,9 @@ public class Main {
         node.left.left = new TreeNode(1);
         node.left.right = new TreeNode(3);
 
-        TreeNode findNode = TraversalUtil.searchBST(node,1);
-        if(findNode!=null)
+        if(TraversalUtil.doLeafSequenceExistsInTrees(node,node))
         {
-            System.out.println(findNode.getData());
+            System.out.println("found");
         }
         else
         {

@@ -292,4 +292,56 @@ public class  TraversalUtil {
         }
         return node;
     }
+
+    public static void getCustomInOrderTraversal(TreeNode root ,  List<Integer> leafSeq)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        getCustomInOrderTraversal(root.getLeft(),leafSeq);
+        if(root.getLeft()==null &&  root.getRight()==null)
+        {
+         leafSeq.add(root.data);
+        }
+        getCustomInOrderTraversal(root.getRight(),leafSeq);
+    }
+    public  static List<Integer> getLeafSequence(TreeNode node)
+    {
+        List<Integer> leafSeq = new ArrayList<>();
+        if(node==null)
+        {
+            return leafSeq;
+        }
+        getCustomInOrderTraversal(node,leafSeq);
+        return leafSeq;
+    }
+    public static boolean doLeafSequenceExistsInTrees(TreeNode root1 , TreeNode root2)
+    {
+        boolean response = false;
+        if(root1==null || root2==null)
+        {
+            return false;
+        }
+        List<Integer> t1LeafSeq =  getLeafSequence(root1);
+        List<Integer> t2LeafSeq =  getLeafSequence(root2);
+
+        if(t1LeafSeq.size()!=t2LeafSeq.size())
+        {
+            return false;
+        }
+
+        for(int i = 0 ; i<t1LeafSeq.size() ; i++)
+        {
+            if(!t1LeafSeq.get(i).equals(t2LeafSeq.get(i)))
+            {
+                return false;
+            }
+            else
+            {
+                response = true;
+            }
+        }
+        return response;
+    }
 }
