@@ -344,4 +344,45 @@ public class  TraversalUtil {
         }
         return response;
     }
+    public static int getSumBinaryRootToLeafPath(TreeNode treeNode)
+    {
+        //only root node contains key value and has no leaf nodes
+        if(treeNode ==null)
+        {
+            return 0;
+        }
+        //insert till u get all left child
+        int[] path =  new int[30];
+        AtomicInteger sum = new AtomicInteger(0);
+        getPathSum(sum,treeNode,path,0);
+        return sum.get();
+    }
+
+    private static void getPathSum(AtomicInteger sum,TreeNode treeNode,int[] pathList,int pathLength)
+    {
+        if(treeNode == null)
+        {
+            return ;
+        }
+        pathList[pathLength] = treeNode.getData();
+        pathLength++;
+        if(treeNode.getLeft() == null && treeNode.getRight() ==null)
+        {
+          sum.set(sum.get() + getDecimalValue(pathList,pathLength));
+        }
+        getPathSum(sum,treeNode.getLeft(),pathList,pathLength);
+        getPathSum(sum,treeNode.getRight(),pathList,pathLength);
+    }
+
+
+    private static int getDecimalValue(int []pathList , int pathLen)
+    {
+        int sum = 0;
+        int size  = pathLen - 1;
+        for(int i = 0 ; i<pathLen ; i++)
+        {
+            sum+=Math.pow(2,size--) * pathList[i];
+        }
+        return sum;
+    }
 }
