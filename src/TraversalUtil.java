@@ -403,4 +403,34 @@ public class  TraversalUtil {
         getInvertedTree(node.getLeft());
         getInvertedTree(node.getRight());
     }
+
+    public static int getMinimumDifference(TreeNode root)
+    {
+        if(root==null || (root.left==null && root.right==null))
+        {
+            return 0;
+        }
+        List<Integer>arr = new ArrayList<>();
+        getArrInorderTraversal(arr,root);
+        int diff = Integer.MAX_VALUE;
+        for(int i = 0 ; i<arr.size() - 1 ; i++)
+        {
+            if(arr.get(i+1) - arr.get(i)<diff)
+            {
+                diff = arr.get(i+1) - arr.get(i);
+            }
+        }
+        return diff;
+    }
+
+    private static void getArrInorderTraversal(List<Integer>arr,TreeNode node)
+    {
+        if(node == null)
+        {
+            return;
+        }
+        getArrInorderTraversal(arr,node.left);
+        arr.add(node.data);
+        getArrInorderTraversal(arr,node.right);
+    }
 }
