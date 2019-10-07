@@ -249,7 +249,6 @@ public class  TraversalUtil {
 
     public static TreeNode insertLevelOrder(List<Integer>arr, TreeNode root,
                                             int i)
-
     {
         if (i < arr.size()) {
             TreeNode temp = arr.get(i)!=null ?  new TreeNode(arr.get(i)) : null;
@@ -306,6 +305,7 @@ public class  TraversalUtil {
         }
         getCustomInOrderTraversal(root.getRight(),leafSeq);
     }
+
     public  static List<Integer> getLeafSequence(TreeNode node)
     {
         List<Integer> leafSeq = new ArrayList<>();
@@ -316,6 +316,7 @@ public class  TraversalUtil {
         getCustomInOrderTraversal(node,leafSeq);
         return leafSeq;
     }
+
     public static boolean doLeafSequenceExistsInTrees(TreeNode root1 , TreeNode root2)
     {
         boolean response = false;
@@ -344,6 +345,7 @@ public class  TraversalUtil {
         }
         return response;
     }
+
     public static int getSumBinaryRootToLeafPath(TreeNode treeNode)
     {
         //only root node contains key value and has no leaf nodes
@@ -374,7 +376,6 @@ public class  TraversalUtil {
         getPathSum(sum,treeNode.getRight(),pathList,pathLength);
     }
 
-
     private static int getDecimalValue(int []pathList , int pathLen)
     {
         int sum = 0;
@@ -384,5 +385,22 @@ public class  TraversalUtil {
             sum+=Math.pow(2,size--) * pathList[i];
         }
         return sum;
+    }
+
+    public static void getInvertedTree(TreeNode node)
+    {
+        if(node==null)
+        {
+            return;
+        }
+
+        TreeNode leftNode = node.getLeft();
+        TreeNode rightNode = node.getRight();
+
+        node.setRight(leftNode);
+        node.setLeft(rightNode);
+
+        getInvertedTree(node.getLeft());
+        getInvertedTree(node.getRight());
     }
 }
