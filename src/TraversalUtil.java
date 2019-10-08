@@ -1,3 +1,5 @@
+import sun.reflect.generics.tree.Tree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -432,5 +434,29 @@ public class  TraversalUtil {
         getArrInorderTraversal(arr,node.left);
         arr.add(node.data);
         getArrInorderTraversal(arr,node.right);
+    }
+
+    public static TreeNode convertSortedArrayToBST(int[] nums)
+    {
+        if(nums.length ==0)
+        {
+            return null;
+        }
+
+        return getBST(nums,0,   nums.length-1);
+    }
+
+    private static TreeNode getBST(int[] arr, int start , int end)
+    {
+        if(start > end)
+        {
+            return null;
+        }
+
+        int mid = (start + end)/2;
+        TreeNode node = new TreeNode(arr[mid]);
+        node.left = getBST(arr,start,mid-1);
+        node.right = getBST(arr,mid+1 , end);
+        return node;
     }
 }
