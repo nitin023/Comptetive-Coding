@@ -459,4 +459,28 @@ public class  TraversalUtil {
         node.right = getBST(arr,mid+1 , end);
         return node;
     }
+
+    public static void getPreOrderIterativeTraversal(TreeNode node)
+    {
+        if(node == null)
+        {
+            return;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        while (node!=null || !stack.isEmpty())
+        {
+            if(node!=null)
+            {
+                System.out.print(node.getData() + " ");
+                stack.push(node);
+                node = node.left;
+            }
+            else
+            {
+                node = stack.pop();
+                node = node.right;
+            }
+        }
+    }
 }

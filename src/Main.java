@@ -2,8 +2,13 @@
 public class Main {
     public static void main(String[] args) {
 
-        int nums [] = {1, 2, 3, 4, 5, 6, 7};
-        TreeNode node = TraversalUtil.convertSortedArrayToBST(nums);
-        TraversalUtil.getPreOrderTraversal(node);
+        TreeNode root = new TreeNode(1);
+        root.left = (new TreeNode(2));
+        root.right =  (new TreeNode(3));
+
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+
+        TraversalUtil.getPreOrderIterativeTraversal(root);
     }
 }
