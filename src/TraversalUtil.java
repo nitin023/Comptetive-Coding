@@ -483,4 +483,35 @@ public class  TraversalUtil {
             }
         }
     }
+
+    public static void getPostOrderIterativeTraversal(TreeNode node)
+    {
+        if(node == null)
+        {
+            return;
+        }
+
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<TreeNode> stack2 = new Stack<>();
+
+        while (node!=null || !stack1.isEmpty())
+        {
+            if(node!=null)
+            {
+                stack1.push(node);
+                stack2.push(node);
+                node = node.right;
+            }
+            else
+            {
+                node = stack1.pop();
+                node = node.left;
+            }
+        }
+     while (!stack2.isEmpty())
+     {
+         node = stack2.pop();
+         System.out.print(node.getData() + " ");
+     }
+    }
 }

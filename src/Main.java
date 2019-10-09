@@ -9,6 +9,6 @@ public class Main {
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
 
-        TraversalUtil.getPreOrderIterativeTraversal(root);
+        TraversalUtil.getPostOrderIterativeTraversal(root);
     }
 }
