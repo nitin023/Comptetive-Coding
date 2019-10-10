@@ -9,6 +9,10 @@ public class Main {
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
 
-        TraversalUtil.getPostOrderIterativeTraversal(root);
+        int arr[] = TraversalUtil.findMostlyOccurringElements(root);
+        for(int i = 0 ; i<arr.length ; i++)
+        {
+            System.out.print(arr[i] + " ");
+        }
     }
 }

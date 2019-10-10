@@ -1,8 +1,7 @@
+import org.omg.CORBA.INTERNAL;
 import sun.reflect.generics.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class  TraversalUtil {
@@ -513,5 +512,49 @@ public class  TraversalUtil {
          node = stack2.pop();
          System.out.print(node.getData() + " ");
      }
+    }
+
+    public static int[] findMostlyOccurringElements(TreeNode treeNode)
+    {
+        int[] arr = {};
+        if(treeNode == null)
+        {
+            return arr;
+        }
+        List<Integer>elemList = new ArrayList<>();
+        getArrInorderTraversal(elemList,treeNode);
+        Map<Integer,Integer>freqMap = new HashMap<>();
+        final int[] maxOccurringElemFreq = {0};
+        elemList.forEach(e->{
+            int freq = 1;
+            if(freqMap.containsKey(e))
+            {
+                freq+=freqMap.get(e);
+            }
+            freqMap.put(e,freq);
+            if(maxOccurringElemFreq[0] <freq)
+            {
+                maxOccurringElemFreq[0] = freq;
+            }
+        });
+        Map<Integer,List<Integer>> freqToElemMap = new HashMap<>();
+        freqMap.forEach((k,v)->{
+            if(maxOccurringElemFreq[0]==v) {
+                List<Integer> tempElemList = new ArrayList<>();
+                if (freqToElemMap.containsKey(v)) {
+                    tempElemList = freqToElemMap.get(v);
+                }
+                tempElemList.add(k);
+                freqToElemMap.put(v, tempElemList);
+            }
+        });
+
+        List<Integer> mostlyOccurringElem = freqToElemMap.get(maxOccurringElemFreq[0]);
+        arr = new int[mostlyOccurringElem.size()];
+        for(int i = 0 ; i<mostlyOccurringElem.size() ; i++)
+        {
+            arr[i] = mostlyOccurringElem.get(i);
+        }
+        return arr;
     }
 }
