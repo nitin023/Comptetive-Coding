@@ -1,3 +1,4 @@
+import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 import org.omg.CORBA.INTERNAL;
 import sun.reflect.generics.tree.Tree;
 
@@ -556,5 +557,25 @@ public class  TraversalUtil {
             arr[i] = mostlyOccurringElem.get(i);
         }
         return arr;
+    }
+
+    public static boolean isValidBST(TreeNode root){
+        if(root==null)
+        {
+            return true;
+        }
+        List<Integer>elemList = new ArrayList<>();
+        getArrInorderTraversal(elemList,root);
+        boolean _isTreeValid = true;
+
+        for(int i = 0 ; i<elemList.size() -1 ; i++)
+        {
+            if(elemList.get(i) >= elemList.get(i+1))
+            {
+                _isTreeValid = false;
+                break;
+            }
+        }
+        return _isTreeValid;
     }
 }
