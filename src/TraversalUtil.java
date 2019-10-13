@@ -578,4 +578,47 @@ public class  TraversalUtil {
         }
         return _isTreeValid;
     }
+
+    public static void getVerticalOrderTraversal(TreeNode root)
+    {
+        if(root==null)
+        {
+            return;
+        }
+
+        Map<Integer,List<TreeNode>> sortedDistanceMap = new TreeMap<>();
+        TreeNodeDistance rootNodeDistConfig = new TreeNodeDistance(0,root);
+        List<TreeNodeDistance>queue = new ArrayList<>();
+        queue.add(rootNodeDistConfig);
+
+        while (!queue.isEmpty())
+        {
+            TreeNodeDistance nodeDistance = queue.get(0);
+            queue.remove(0);
+            TreeNode treeNode = nodeDistance.getTreeNode();
+            List<TreeNode>treeNodeList = new ArrayList<>();
+            if(sortedDistanceMap.containsKey(nodeDistance.getDistance()))
+            {
+                treeNodeList = sortedDistanceMap.get(nodeDistance.getDistance());
+            }
+            treeNodeList.add(treeNode);
+            sortedDistanceMap.put(nodeDistance.getDistance(),treeNodeList);
+            if(treeNode.getLeft()!=null)
+            {
+                queue.add(new TreeNodeDistance(nodeDistance.getDistance() - 1,treeNode.getLeft()));
+            }
+            if(treeNode.getRight()!=null)
+            {
+                queue.add(new TreeNodeDistance(nodeDistance.getDistance() + 1,treeNode.getRight()));
+            }
+        }
+
+        for(int distanceKey :sortedDistanceMap.keySet())
+        {
+            for(TreeNode treeNode : sortedDistanceMap.get(distanceKey)) {
+                System.out.print(treeNode.getData() + " , ");
+            }
+            System.out.println();
+        }
+    }
 }
