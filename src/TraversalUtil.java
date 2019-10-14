@@ -621,4 +621,41 @@ public class  TraversalUtil {
             System.out.println();
         }
     }
+
+    public static void getTopViewBinaryTree(TreeNode root)
+    {
+        if(root==null)
+        {
+            return;
+        }
+
+        Map<Integer,TreeNode> sortedDistanceMap = new TreeMap<>();
+        TreeNodeDistance rootNodeDistConfig = new TreeNodeDistance(0,root);
+        List<TreeNodeDistance>queue = new ArrayList<>();
+        queue.add(rootNodeDistConfig);
+
+        while (!queue.isEmpty())
+        {
+            TreeNodeDistance nodeDistance = queue.get(0);
+            queue.remove(0);
+            TreeNode treeNode = nodeDistance.getTreeNode();
+            if(!sortedDistanceMap.containsKey(nodeDistance.getDistance()))
+            {
+                sortedDistanceMap.put(nodeDistance.getDistance(),treeNode);
+            }
+            if(treeNode.getLeft()!=null)
+            {
+                queue.add(new TreeNodeDistance(nodeDistance.getDistance() - 1,treeNode.getLeft()));
+            }
+            if(treeNode.getRight()!=null)
+            {
+                queue.add(new TreeNodeDistance(nodeDistance.getDistance() + 1,treeNode.getRight()));
+            }
+        }
+
+        for(int distanceKey :sortedDistanceMap.keySet())
+        {
+                System.out.print(sortedDistanceMap.get(distanceKey).getData()+",");
+        }
+    }
 }
