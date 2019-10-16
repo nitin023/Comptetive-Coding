@@ -7,6 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class  TraversalUtil {
 
+    public static int preIndex = 0 ;
+
     public static void getPreOrderTraversal(TreeNode root)
     {
         if(root==null)
@@ -657,5 +659,37 @@ public class  TraversalUtil {
         {
                 System.out.print(sortedDistanceMap.get(distanceKey).getData()+",");
         }
+    }
+
+    public static TreeNode getBinaryTreeFromInorderAndPreOrderTraversals(int[] preorder, int[] inorder)
+    {
+        if(preorder.length == 0 || inorder.length ==0)
+        {
+            return null;
+        }
+        Map<Integer,Integer>valIndMap = new HashMap<>();
+        for(int i = 0; i<inorder.length ;i++)
+        {
+         valIndMap.put(inorder[i],i);
+        }
+        preIndex = 0;
+        return buildTree(preorder,inorder,valIndMap,0,inorder.length-1);
+    }
+
+    private static TreeNode buildTree(int[] preorder, int[] inorder,Map<Integer,Integer>valIndMap,int inStr , int inEnd)
+    {
+     if(inStr > inEnd)
+     {
+         return  null;
+     }
+     TreeNode node = new TreeNode(preorder[preIndex++]);
+     if(inStr == inEnd)
+     {
+         return node;
+     }
+     int index = valIndMap.get(node.data);
+      node.left = buildTree(preorder , inorder , valIndMap , inStr , index - 1);
+      node.right = buildTree(preorder , inorder , valIndMap , index+1 , inEnd);
+      return node;
     }
 }
