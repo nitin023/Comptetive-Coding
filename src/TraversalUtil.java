@@ -673,10 +673,10 @@ public class  TraversalUtil {
          valIndMap.put(inorder[i],i);
         }
         preIndex = 0;
-        return buildTree(preorder,inorder,valIndMap,0,inorder.length-1);
+        return buildTreeFromInAndPreOrder(preorder,inorder,valIndMap,0,inorder.length-1);
     }
 
-    private static TreeNode buildTree(int[] preorder, int[] inorder,Map<Integer,Integer>valIndMap,int inStr , int inEnd)
+    private static TreeNode buildTreeFromInAndPreOrder(int[] preorder, int[] inorder,Map<Integer,Integer>valIndMap,int inStr , int inEnd)
     {
      if(inStr > inEnd)
      {
@@ -688,8 +688,41 @@ public class  TraversalUtil {
          return node;
      }
      int index = valIndMap.get(node.data);
-      node.left = buildTree(preorder , inorder , valIndMap , inStr , index - 1);
-      node.right = buildTree(preorder , inorder , valIndMap , index+1 , inEnd);
+      node.left = buildTreeFromInAndPreOrder(preorder , inorder , valIndMap , inStr , index - 1);
+      node.right = buildTreeFromInAndPreOrder(preorder , inorder , valIndMap , index+1 , inEnd);
       return node;
+    }
+
+    public static TreeNode bstFromPreOrder(int[] preorder)
+    {
+        if(preorder.length==0)
+        {
+            return null;
+        }
+
+        TreeNode rootNode = new TreeNode(preorder[0]);
+        int value ;
+        for(int i = 1 ; i<preorder.length ; i++)
+        {
+            value = preorder[i];
+            rootNode = insertIntoBST(rootNode,value);
+        }
+        return rootNode;
+    }
+    private static TreeNode insertIntoBST(TreeNode node , int val)
+    {
+        if(node == null)
+        {
+            return new TreeNode(val);
+        }
+        if(val <node.data)
+        {
+            node.left = insertIntoBST(node.left,val);
+        }
+        else
+        {
+            node.right = insertIntoBST(node.right,val);
+        }
+        return node;
     }
 }
