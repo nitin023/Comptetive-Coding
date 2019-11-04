@@ -631,34 +631,31 @@ public class  TraversalUtil {
             return;
         }
 
-        Map<Integer,TreeNode> sortedDistanceMap = new TreeMap<>();
-        TreeNodeDistance rootNodeDistConfig = new TreeNodeDistance(0,root);
-        List<TreeNodeDistance>queue = new ArrayList<>();
-        queue.add(rootNodeDistConfig);
+        List<TreeNodeDistance> levelQueue = new ArrayList<>();
+        levelQueue.add(new TreeNodeDistance(0,root));
 
-        while (!queue.isEmpty())
+        Map<Integer,Integer> sortedDistanceMap = new TreeMap<>();
+        while (!levelQueue.isEmpty())
         {
-            TreeNodeDistance nodeDistance = queue.get(0);
-            queue.remove(0);
-            TreeNode treeNode = nodeDistance.getTreeNode();
-            if(!sortedDistanceMap.containsKey(nodeDistance.getDistance()))
-            {
-                sortedDistanceMap.put(nodeDistance.getDistance(),treeNode);
-            }
+            //pop the queue
+            TreeNodeDistance treeNodeDistance = levelQueue.remove(0);
+            TreeNode treeNode = treeNodeDistance.getTreeNode();
+            sortedDistanceMap.putIfAbsent(treeNodeDistance.getDistance(),treeNode.getData());
+
             if(treeNode.getLeft()!=null)
             {
-                queue.add(new TreeNodeDistance(nodeDistance.getDistance() - 1,treeNode.getLeft()));
+                levelQueue.add(new TreeNodeDistance(treeNodeDistance.getDistance()-1,treeNode.getLeft()));
             }
+
             if(treeNode.getRight()!=null)
             {
-                queue.add(new TreeNodeDistance(nodeDistance.getDistance() + 1,treeNode.getRight()));
+                levelQueue.add(new TreeNodeDistance(treeNodeDistance.getDistance()+1,treeNode.getRight()));
             }
         }
 
-        for(int distanceKey :sortedDistanceMap.keySet())
-        {
-                System.out.print(sortedDistanceMap.get(distanceKey).getData()+",");
-        }
+        sortedDistanceMap.entrySet().forEach(e->{
+            System.out.print(e.getValue() + " ");
+        });
     }
 
     public static TreeNode getBinaryTreeFromInorderAndPreOrderTraversals(int[] preorder, int[] inorder)
