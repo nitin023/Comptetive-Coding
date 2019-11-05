@@ -779,4 +779,46 @@ public class  TraversalUtil {
             }
         }
     }
+    public static void getDiagonalView(TreeNode root)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        List<TreeNodeDistance> queue = new ArrayList<>();
+        queue.add(new TreeNodeDistance(0,root));
+        Map<Integer,List<Integer>> distanceMap = new TreeMap<>();
+
+        while (!queue.isEmpty())
+        {
+            TreeNodeDistance treeNodeDistance = queue.remove(0);
+            TreeNode treeNode = treeNodeDistance.getTreeNode();
+            if(!distanceMap.containsKey(treeNodeDistance.getDistance()))
+            {
+                distanceMap.put(treeNodeDistance.getDistance(),new ArrayList<>(Arrays.asList(treeNode.getData())));
+            }
+            else
+            {
+                List<Integer>distanceList = distanceMap.get(treeNodeDistance.getDistance());
+                distanceList.add(treeNode.getData());
+                distanceMap.put(treeNodeDistance.getDistance(),distanceList);
+            }
+
+            if(treeNode.getLeft()!=null)
+            {
+                queue.add(new TreeNodeDistance(treeNodeDistance.getDistance()+1,treeNode.getLeft()));
+            }
+            if(treeNode.getRight()!=null)
+            {
+                queue.add(new TreeNodeDistance(treeNodeDistance.getDistance(),treeNode.getRight()));
+            }
+        }
+
+        distanceMap.forEach((k,v)->{
+            v.forEach(distance->{
+                System.out.print(distance + " ");
+            });
+            System.out.println();
+        });
+    }
 }
