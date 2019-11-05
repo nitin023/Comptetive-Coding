@@ -722,4 +722,61 @@ public class  TraversalUtil {
         }
         return node;
     }
+
+    public static void getLeftView(TreeNode root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+
+        List<TreeNode> levelQueue = new ArrayList<>();
+        levelQueue.add(root);
+        int queueCnt , cnt;
+        while (!levelQueue.isEmpty())
+        {
+            cnt = queueCnt = levelQueue.size();
+            while (cnt>0) {
+                TreeNode treeNode =  levelQueue.remove(0);
+                if (cnt == queueCnt) {
+                    System.out.print(treeNode.getData() + " ");
+                }
+                if (treeNode.getLeft() != null) {
+                    levelQueue.add(treeNode.getLeft());
+                }
+                if (treeNode.getRight() != null) {
+                    levelQueue.add(treeNode.getRight());
+                }
+                cnt--;
+            }
+        }
+    }
+    public static void getRightView(TreeNode root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+
+        List<TreeNode> levelQueue = new ArrayList<>();
+        levelQueue.add(root);
+        int  cnt;
+        while (!levelQueue.isEmpty())
+        {
+            cnt  = levelQueue.size();
+            while (cnt>0) {
+                TreeNode treeNode =  levelQueue.remove(0);
+                if (cnt == 1) {
+                    System.out.print(treeNode.getData() + " ");
+                }
+                if (treeNode.getLeft() != null) {
+                    levelQueue.add(treeNode.getLeft());
+                }
+                if (treeNode.getRight() != null) {
+                    levelQueue.add(treeNode.getRight());
+                }
+                cnt--;
+            }
+        }
+    }
 }

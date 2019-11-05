@@ -1,3 +1,4 @@
+import org.omg.CORBA.TRANSACTION_MODE;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,6 +12,7 @@ public class Main {
        node.right.right = new TreeNode(7);
        node.right.left.right = new TreeNode(8);
 
-       TraversalUtil.getTopViewBinaryTree(node);
+       TraversalUtil.getLeftView(node);
+       TraversalUtil.getRightView(node);
     }
 }
