@@ -12,6 +12,6 @@ public class Main {
        node.right.right = new TreeNode(7);
        node.right.left.right = new TreeNode(8);
 
-       TraversalUtil.getDiagonalView(node);
+       TraversalUtil.getBottomView(node);
     }
 }
