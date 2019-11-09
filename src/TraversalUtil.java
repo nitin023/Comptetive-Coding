@@ -1,7 +1,3 @@
-import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
-import org.omg.CORBA.INTERNAL;
-import sun.reflect.generics.tree.Tree;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -859,6 +855,25 @@ public class  TraversalUtil {
         {
             List<TreeNode>treeNodeList = sortedDistanceMap.get(distanceKey);
             System.out.print(treeNodeList.get(treeNodeList.size() - 1).getData() + " ");
+        }
+    }
+
+
+    public static int binarySearch(List<Integer> arr , int low , int high , int val)
+    {
+        if(low <= high) {
+            int mid = (low + high) / 2;
+            if (val == arr.get(mid)) {
+                return mid;
+            } else if (arr.get(mid) < val) {
+                return binarySearch(arr, mid + 1, high, val);
+            } else {
+                return binarySearch(arr, low, mid - 1, val);
+            }
+        }
+        else
+        {
+            return -1;
         }
     }
 }
