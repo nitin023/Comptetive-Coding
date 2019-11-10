@@ -1,3 +1,5 @@
+import sun.net.www.http.ChunkedInputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,5 +149,41 @@ public class Searching {
                  return -1;
              }
         }
+    }
+
+    /**
+     *
+     * @param low
+     * @param high
+     * @param num
+     * @return
+     */
+    public static int sqrt(long low, long high , long num) {
+            long mid = 0;
+            boolean flag = false;
+            while (low <= high) {
+                mid = (low + high) / 2;
+                if (num == mid * mid) {
+                    flag = true;
+                    break;
+                } else if (num < mid * mid) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            if(flag)
+            {
+                return (int)mid;
+            }
+            else
+            {
+                if(mid*mid <=num)
+                return (int)mid;
+                else
+                {
+                    return (int)mid -1;
+                }
+            }
     }
 }
