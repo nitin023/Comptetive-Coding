@@ -105,4 +105,47 @@ public class Searching {
             return -1;
         }
     }
+
+    /**
+     * This will return the index where element should be inserted
+     * if the element not is found
+     * @param array
+     * @param low
+     * @param high
+     * @param key
+     * @return
+     */
+    public static int customizedBinarySearch(ArrayList<Integer>array , int low , int high , int key)
+    {
+        if(low<=high)
+        {
+            int mid = (low+high)/2;
+            if(array.get(mid) == key)
+            {
+                return mid;
+            }
+            else if(key <array.get(mid))
+            {
+                return customizedBinarySearch(array , low,mid -1 , key);
+            }
+            else
+            {
+                return customizedBinarySearch(array ,mid +1 ,high , key);
+            }
+        }
+        else
+        {
+            if(low>=0) {
+                return low;
+            }
+             if(high >=0)
+            {
+                return high;
+            }
+             else
+             {
+                 return -1;
+             }
+        }
+    }
 }
