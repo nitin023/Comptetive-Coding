@@ -858,22 +858,4 @@ public class  TraversalUtil {
         }
     }
 
-
-    public static int binarySearch(List<Integer> arr , int low , int high , int val)
-    {
-        if(low <= high) {
-            int mid = (low + high) / 2;
-            if (val == arr.get(mid)) {
-                return mid;
-            } else if (arr.get(mid) < val) {
-                return binarySearch(arr, mid + 1, high, val);
-            } else {
-                return binarySearch(arr, low, mid - 1, val);
-            }
-        }
-        else
-        {
-            return -1;
-        }
-    }
 }
