@@ -71,6 +71,7 @@ public class TreeCoreUtils {
      */
     public static int getNodesCntRecursively(TreeNode treeNode)
     {
+        cntNodes = 0;
         return getCntUsingPreOrder(treeNode);
     }
 
@@ -84,5 +85,66 @@ public class TreeCoreUtils {
         getCntUsingPreOrder(treeNode.getLeft());
         getCntUsingPreOrder(treeNode.getRight());
        return cntNodes;
+    }
+
+    /**
+     * calculates leaf nodes cnt iteratively
+     * @param root
+     * @return
+     */
+    public static int getLeafNodesCntIteratively(TreeNode root)
+    {
+        if(root == null)
+        {
+            return 0;
+        }
+        int cntLeafNodes = 0;
+        List<TreeNode> queue = new ArrayList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty())
+        {
+            TreeNode node = queue.remove(0);
+            if(node.getLeft() == null && node.getRight() == null)
+            {
+                cntLeafNodes++;
+            }
+
+            if(node.getLeft() != null)
+            {
+                queue.add(node.getLeft());
+            }
+            if(node.getRight() != null)
+            {
+                queue.add(node.getRight());
+            }
+        }
+        return cntLeafNodes;
+    }
+
+    /**
+     * code calculates num of leaf nodes in a binary tree using pre-order traversal technique
+     * recursively
+     * @param treeNode
+     * @return
+     */
+    public static int getLeafNodesCntRecursively(TreeNode treeNode)
+    {
+        cntNodes = 0;
+        return getLeafCntUsingPreOrder(treeNode);
+    }
+
+    private static int getLeafCntUsingPreOrder(TreeNode treeNode)
+    {
+        if(treeNode == null)
+        {
+            return 0;
+        }
+        if(treeNode.getLeft() == null && treeNode.getRight() == null) {
+            cntNodes++;
+        }
+        getLeafCntUsingPreOrder(treeNode.getLeft());
+        getLeafCntUsingPreOrder(treeNode.getRight());
+        return cntNodes;
     }
 }
