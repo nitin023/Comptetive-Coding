@@ -858,4 +858,92 @@ public class  TraversalUtil {
         }
     }
 
+    /**
+     * This problem calculates boundary of a tree by splitting tree into three parts
+     * left , leaf and right boundary
+     * we move fro top to left direction for finding left boundary
+     * and then from left to right direction to find all the leaf nodes
+     * and finally from bottom to top to find right boundary
+     * @param treeNode
+     */
+    public static void getBoundaryTraversal(TreeNode treeNode)
+    {
+        if(treeNode == null)
+        {
+            return;
+        }
+
+        TreeNode node = treeNode;
+        ArrayList<Integer>list = new ArrayList<>();
+
+        //This segment gets left boundary
+        while (node!=null)
+        {
+            list.add(node.getData());
+            node = node.getLeft();
+        }
+
+        //This segment gets leaf boundary
+        list = getLeafNodes(list,treeNode);
+
+        node = treeNode;
+        ArrayList<Integer>rightList = new ArrayList<>();
+
+        //This segment gets right boundary
+        while (node!=null)
+        {
+            rightList.add(node.getData());
+            node = node.getRight();
+        }
+
+        //merging three boundary result and ensuring all the left + leaf + right boundary gets merged in clockwise direction
+        Set<Integer>printingSet = new HashSet<>();
+        for(int k : list)
+        {
+            if(!printingSet.contains(k))
+            {
+                System.out.print(k + " ");
+                printingSet.add(k);
+            }
+        }
+
+        for(int k = rightList.size() - 1 ; k>=0 ; k--)
+        {
+            if(!printingSet.contains(rightList.get(k)))
+            {
+                System.out.print(rightList.get(k) + " ");
+                printingSet.add(rightList.get(k));
+            }
+        }
+    }
+
+    private static ArrayList<Integer> getLeafNodes(ArrayList<Integer> list,TreeNode root)
+    {
+        if(root == null)
+        {
+            return list;
+        }
+
+        List<TreeNode> queue = new ArrayList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty())
+        {
+            TreeNode node = queue.remove(0);
+            if(node.getLeft() == null && node.getRight() == null)
+            {
+                list.add(node.getData());
+            }
+
+            if(node.getLeft() != null)
+            {
+                queue.add(node.getLeft());
+            }
+            if(node.getRight() != null)
+            {
+                queue.add(node.getRight());
+            }
+        }
+        return list;
+    }
 }
