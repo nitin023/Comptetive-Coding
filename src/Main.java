@@ -9,6 +9,6 @@ public class Main {
         treeNode.left.left = new TreeNode(3);
         treeNode.left.right = new TreeNode(4);
         treeNode.left.right.right = new TreeNode(5);
-        System.out.println(TreeCoreUtils.getHeightBinaryTree(treeNode));
+        System.out.println(TreeCoreUtils.getNodesCntRecursively(treeNode));
     }
 }
