@@ -13,6 +13,7 @@ public class Main {
 
         treeNode.right.right = new TreeNode(7);
         treeNode.right.right.right = new TreeNode(8);
-        TraversalUtil.getBoundaryTraversal(treeNode);
+
+        Hashing.colorful(23);
     }
 }

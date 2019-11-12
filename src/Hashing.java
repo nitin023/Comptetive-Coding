@@ -1,6 +1,6 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+
+import java.util.*;
 
 public class Hashing {
 
@@ -30,5 +30,50 @@ public class Hashing {
             }
         }
         return 0;
+    }
+
+    /**
+     * For Given Number N find if its COLORFUL number or not
+     * A number can be broken into different contiguous sub-subsequence parts.
+     * Suppose, a number 3245 can be broken into parts like 3 2 4 5 32 24 45 324 245.
+     * And this number is a COLORFUL number, since product of every digit of a contiguous subsequence is different
+     * @param A
+     * @return
+     */
+    public  static int colorful(int A) {
+        StringBuilder sb = new StringBuilder();
+        while (A!=0)
+        {
+            sb.append(A%10);
+            A/=10;
+        }
+
+        Set<Integer> prodSet = new HashSet<>();
+        String testSub = sb.toString();
+        int maxDigitSeq = testSub.length();
+        char[] arr = testSub.toCharArray();
+
+        for(int i = 1 ; i<=maxDigitSeq ; i++)
+        {
+            for(int j = 0 ; j<arr.length ; j++)
+            {
+                if(j+i >arr.length)
+                {
+                    break;
+                }
+                char[] test = testSub.substring(j,j+i).toCharArray();
+                int prod = 1;
+                for(int k = 0 ; k<test.length ; k++)
+                {
+                    prod*=(test[k] - '0');
+                }
+                if(prodSet.contains(prod))
+                {
+                   return 0;
+                }
+                prodSet.add(prod);
+            }
+        }
+        return 1;
     }
 }
