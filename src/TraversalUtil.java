@@ -1,3 +1,5 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -974,5 +976,61 @@ public class  TraversalUtil {
         root.setLeft(rootRight);
         root.setRight(rootLeft);
         return root;
+    }
+
+    /**
+     * get a level order traversed list including all null values for each level from left to right
+     * considered max elements for a level to determine level change example 3 level can have max 8 elements
+     * using this level change is detected
+     *
+     * Spiral order says move from left to right for odd level and from right to left in even level
+     * @param root
+     */
+    public static void getSpiralOrderTraversal(TreeNode root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+
+        List<Integer> levelOrderTraversalList = getLevelTraversal(root);
+
+        int levelNum = 0;
+        int levelMaxChild = 0;
+        for(int i = 0; i< levelOrderTraversalList.size() ; )
+        {
+            levelMaxChild = (int)Math.pow(2,levelNum++);
+            if(levelNum%2!=0) {
+                for (int j = 0; j < levelMaxChild; j++) {
+                    if(levelOrderTraversalList.get(i)!=null) {
+                        System.out.print(levelOrderTraversalList.get(i) + " ");
+                        i++;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+                List<Integer>tempList = new ArrayList<>();
+                for (int j = 0; j < levelMaxChild; j++) {
+                    if(levelOrderTraversalList.get(i)!=null) {
+                        tempList.add(levelOrderTraversalList.get(i));
+                        i++;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                for(int j = tempList.size() - 1 ; j>=0 ; j--)
+                {
+                    System.out.print(tempList.get(j) + " ");
+                }
+            }
+            System.out.println();
+        }
     }
 }

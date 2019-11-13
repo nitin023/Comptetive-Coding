@@ -15,7 +15,6 @@ public class Main {
 
         treeNode.right.right = new TreeNode(7);
         treeNode.right.right.right = new TreeNode(8);
-        TraversalUtil.getMirrorBinaryTree(treeNode);
-        TraversalUtil.levelOrderTraversal(treeNode);
+        TraversalUtil.getSpiralOrderTraversal(treeNode);
     }
 }
