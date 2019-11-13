@@ -946,4 +946,33 @@ public class  TraversalUtil {
         }
         return list;
     }
+
+    /**
+     * Mirror of a binary tree means that on observing tree left child become right child while
+     * right child becomes left child
+     *
+     * Simply done by using post-order traversal ( LRV) and instead of printing the node we swap the right and left child
+     *
+     * Also the inorder traversal of original tree and mirror tree are reversed of one another
+     * Inorder of original tree : 1 , 2 , 3 , 4 , 5
+     * Inorder of mirrored tree : 5 , 4 , 3, 2 , 1
+     * @param root
+     * @return
+     */
+    public static TreeNode getMirrorBinaryTree(TreeNode root)
+    {
+        if(root == null)
+        {
+            return null;
+        }
+
+        getMirrorBinaryTree(root.getLeft());
+        getMirrorBinaryTree(root.getRight());
+
+        TreeNode rootLeft = root.getLeft();
+        TreeNode rootRight = root.getRight();
+        root.setLeft(rootRight);
+        root.setRight(rootLeft);
+        return root;
+    }
 }

@@ -1,4 +1,6 @@
-import sun.reflect.generics.tree.Tree;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class Main {
 
         treeNode.right.right = new TreeNode(7);
         treeNode.right.right.right = new TreeNode(8);
-
-        Hashing.colorful(23);
+        TraversalUtil.getMirrorBinaryTree(treeNode);
+        TraversalUtil.levelOrderTraversal(treeNode);
     }
 }
