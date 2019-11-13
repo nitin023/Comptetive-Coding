@@ -1,7 +1,3 @@
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         TreeNode treeNode = new TreeNode(1);
@@ -15,6 +11,10 @@ public class Main {
 
         treeNode.right.right = new TreeNode(7);
         treeNode.right.right.right = new TreeNode(8);
-        TraversalUtil.getSpiralOrderTraversal(treeNode);
+        TreeNode lcaNode = TreeCoreUtils.getLowestCommonAncestorInBinaryTree(treeNode, treeNode.left.left , treeNode.left.right);
+        if(lcaNode!=null)
+        {
+            System.out.println(lcaNode.getData());
+        }
     }
 }

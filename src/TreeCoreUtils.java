@@ -147,4 +147,28 @@ public class TreeCoreUtils {
         getLeafCntUsingPreOrder(treeNode.getRight());
         return cntNodes;
     }
+
+    public static TreeNode getLowestCommonAncestorInBinaryTree(TreeNode root , TreeNode node1 , TreeNode node2)
+    {
+        if(root == null || node1 == null || node2 == null)
+        {
+            return null;
+        }
+
+        if(root == node1 || root == node2){
+            return root;
+        }
+
+        TreeNode nodeLeft = getLowestCommonAncestorInBinaryTree(root.getLeft() , node1 , node2);
+        TreeNode nodeRight = getLowestCommonAncestorInBinaryTree(root.getRight() , node1 , node2);
+        if(nodeLeft!=null && nodeRight !=null)
+        {
+            return root;
+        }
+        if(nodeLeft == null && nodeRight == null)
+        {
+            return null;
+        }
+        return nodeLeft !=null  ? nodeLeft : nodeRight;
+    }
 }
