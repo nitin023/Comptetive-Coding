@@ -1,5 +1,8 @@
 import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+import org.omg.CORBA.INTERNAL;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import javax.annotation.processing.SupportedSourceVersion;
 import java.util.*;
 
 public class Hashing {
@@ -75,5 +78,98 @@ public class Hashing {
             }
         }
         return 1;
+    }
+
+    /**
+     * Given an array of integers, find two numbers such that they add up to a specific target number.
+     *
+     * The function twoSum should return indices of the two numbers such that they add up to the target, where index1 < index2. Please note that your returned answers (both index1 and index2 ) are not zero-based.
+     * Put both these numbers in order in an array and return the array from your function ( Looking at the function signature will make things clearer ). Note that, if no pair exists, return empty list.
+     *
+     * If multiple solutions exist, output the one where index2 is minimum. If there are multiple solutions with the minimum index2, choose the one with minimum index1 out of them.
+     * @param A
+     * @param B
+     * @return
+     */
+    public static ArrayList<Integer> twoSum(final List<Integer> A, int B) {
+
+        if(A ==null || A.isEmpty())
+        {
+            return new ArrayList<>();
+        }
+
+        Map<Integer,List<Integer>> numIndexMap = new LinkedHashMap<>();
+        List<Integer> preExistIndex ;
+        for(int i = 0 ; i <A.size() ; i++)
+        {
+            int num = A.get(i);
+            if(!numIndexMap.containsKey(num))
+            {
+                preExistIndex = new ArrayList<>();
+                preExistIndex.add(i);
+                numIndexMap.put(num, preExistIndex);
+            }
+            else
+            {
+                preExistIndex = numIndexMap.get(num);
+                preExistIndex.add(i);
+                numIndexMap.put(num, preExistIndex);
+            }
+        }
+
+      int minInd2 = Integer.MAX_VALUE;
+      int minInd1 = Integer.MAX_VALUE;
+
+        for(int i = 0 ; i < A.size() ; i++)
+        {
+            int currentNum = A.get(i);
+            int numFind = B - currentNum;
+            if(numIndexMap.containsKey(numFind))
+            {
+                List<Integer> existIndList = numIndexMap.get(numFind);
+                int index = -1;
+                for(int k : existIndList)
+                {
+                    if(i < k)
+                    {
+                        index = k;
+                        break;
+                    }
+                }
+                if(index >-1 && minInd2 > index)
+                {
+                    minInd2 = index;
+                    minInd1 = i;
+                }
+            }
+        }
+        ArrayList<Integer> responseList = new ArrayList<>();
+        responseList.add(minInd1+1);
+        responseList.add(minInd2+1);
+        return responseList;
+    }
+
+    public static List<List<String>> getGroupAnagaram(String [] strs)
+    {
+        Map<String, List<String>> grpMap = new HashMap<>();
+        for(String s : strs)
+        {
+            char[] arr = s.toCharArray();
+            Arrays.sort(arr);
+            String sortedStr = String.valueOf(arr);
+            List<String>tList = new ArrayList<>();
+            if(grpMap.containsKey(sortedStr))
+            {
+                tList = grpMap.get(sortedStr);
+            }
+            tList.add(s);
+            grpMap.put(sortedStr,tList);
+        }
+        List<List<String>> responseList = new ArrayList<>();
+        for(Map.Entry<String, List<String>> m : grpMap.entrySet())
+        {
+            responseList.add(m.getValue());
+        }
+        return responseList;
     }
 }
