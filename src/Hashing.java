@@ -133,22 +133,34 @@ public class Hashing {
         return responseList;
     }
 
-    public static List<List<String>> getGroupAnagaram(String[] strs) {
-        Map<String, List<String>> grpMap = new HashMap<>();
-        for (String s : strs) {
-            char[] arr = s.toCharArray();
+    /**
+     * Given an array of strings, return all groups of strings that are anagrams.
+     * Represent a group by a list of integers representing the index in the original list. Look at the sample case for clarification.
+     *
+     * Note: All inputs will be in lower-case
+     *
+     * Input : cat dog god tca
+     * Output : [[1, 4], [2, 3]]
+     * @param strs
+     * @return
+     */
+    public static ArrayList<ArrayList<Integer>>getGroupAnagaram(String[] strs) {
+        Map<String, List<Integer>> grpMap = new HashMap<>();
+        for (int i = 0 ; i< strs.length ; i++) {
+            char[] arr = strs[i].toCharArray();
             Arrays.sort(arr);
             String sortedStr = String.valueOf(arr);
-            List<String> tList = new ArrayList<>();
+            List<Integer> tList = new ArrayList<>();
             if (grpMap.containsKey(sortedStr)) {
                 tList = grpMap.get(sortedStr);
             }
-            tList.add(s);
+            tList.add(i+1);
             grpMap.put(sortedStr, tList);
         }
-        List<List<String>> responseList = new ArrayList<>();
-        for (Map.Entry<String, List<String>> m : grpMap.entrySet()) {
-            responseList.add(m.getValue());
+        ArrayList<ArrayList<Integer>> responseList = new ArrayList<>();
+        for (Map.Entry<String, List<Integer>> m : grpMap.entrySet()) {
+            ArrayList<Integer> array = new ArrayList<>(m.getValue());
+            responseList.add(array);
         }
         return responseList;
     }
