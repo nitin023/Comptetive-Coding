@@ -3,6 +3,7 @@ import org.omg.CORBA.INTERNAL;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import javax.annotation.processing.SupportedSourceVersion;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Hashing {
@@ -241,8 +242,6 @@ public class Hashing {
         return responseList;
     }
 
-
-
     /**
      * Longest Substring Without Repeat
      * Asked in:
@@ -288,5 +287,186 @@ public class Hashing {
             }
         }
         return maxCnt;
+    }
+
+    /**
+     * Largest Continuous Sequence Zero Sum
+     * Asked in:
+     * Microsoft
+     *
+     * Find the largest continuous sequence in a array which sums to zero.
+     *
+     * Example:
+     *
+     *
+     * Input:  {1 ,2 ,-2 ,4 ,-4}
+     * Output: {2 ,-2 ,4 ,-4}
+     *
+     * NOTE : If there are multiple correct answers, return the sequence which occurs first in the array
+     * @param A
+     * @return
+     */
+    public static ArrayList<Integer> lszero(ArrayList<Integer> A) {
+
+        if(A==null || A.size() ==0)
+        {
+            return new ArrayList<>();
+        }
+
+        int i = 0,j = 0,sum=0;
+
+        ArrayList<Integer>sumArray = new ArrayList<>();
+        for(i = 0 ; i<A.size() ; i++)
+        {
+            sum+=A.get(i);
+            sumArray.add(sum);
+        }
+
+        Map<Integer,List<Integer>> sumIndMap = new LinkedHashMap<>();
+        int x = 0 , y = 0;
+        for(i = 0 ; i< sumArray.size() ; i++)
+        {
+            List<Integer>tempList = new ArrayList<>();
+            if(!sumIndMap.containsKey(sumArray.get(i)))
+            {
+                tempList.add(i);
+            }
+            else
+            {
+                tempList = sumIndMap.get(sumArray.get(i));
+                tempList.add(i);
+            }
+            sumIndMap.put(sumArray.get(i),tempList);
+        }
+        ArrayList<Integer>responses = new ArrayList<>();
+
+        for(Map.Entry<Integer,List<Integer>> k : sumIndMap.entrySet())
+        {
+            if(k.getValue().size()>1)
+            {
+                x = k.getValue().get(0);
+                y = k.getValue().get(k.getValue().size()-1);
+            }
+        }
+
+
+        for(i = x; i < y ; i++ )
+        {
+            responses.add(A.get(i));
+        }
+        return responses;
+    }
+
+    public static int lengthOfLastWord(final String A) {
+
+        if(A.isEmpty())
+        {
+            return 0;
+        }
+
+        int len = 0;
+        int ind = 0 , i;
+
+        String [] m = A.split(" ");
+        if(m.length ==1)
+        {
+            len = m[0].length();
+        }
+        else
+        {
+            len = m[m.length-1].length();
+        }
+        return len;
+    }
+
+    public static String longestCommonPrefix(ArrayList<String> A) {
+
+        StringBuilder prefixBuilder = new StringBuilder();
+        for(int i = 0  ; i <A.size()  ; i++)
+        {
+            String first = A.get(i);
+            for(int j = i+1 ; j < A.size() ; j++)
+            {
+                String second = A.get(j);
+
+                for(int k = 0;k<first.length() && k<second.length() ; k++)
+                {
+                    if(first.charAt(k)==second.charAt(k))
+                    {
+                        prefixBuilder.append(first.charAt(k));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        return prefixBuilder.toString();
+    }
+
+
+    /**
+     * Substring Concatenation
+     * You are given a string, S, and a list of words, L, that are all of the same length
+     *
+     * Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters.
+     *
+     * Example :
+     *
+     * S: "barfoothefoobarman"
+     * L: ["foo", "bar"]
+     * You should return the indices: [0,9].
+     * (order does not matter).
+     *
+     * @param A
+     * @param B
+     * @return
+     */
+    public static ArrayList<Integer> findSubstring(String A, final List<String> B) {
+        if(A.isEmpty() || A==null || B == null || B.isEmpty())
+        {
+            return new ArrayList<>();
+        }
+
+        //sort list
+        Collections.sort(B);
+        StringBuilder sb = new StringBuilder();
+        for(String k : B)
+        {
+            sb.append(k);
+        }
+        int strLen = B.get(0).length();
+
+        int totalLen = strLen * B.size();
+
+        ArrayList<Integer>response = new ArrayList<>();
+        List<String>C ;
+        for(int i = 0 ; i<A.length() ; i++)
+        {
+            if(i+totalLen > A.length())
+            {
+                break;
+            }
+
+            String mon = A.substring(i , i+totalLen);
+            C = new ArrayList<>();
+            for(int j = 0 ; j<mon.length() ; )
+            {
+                C.add(mon.substring(j,j+strLen));
+                j+=strLen;
+            }
+            Collections.sort(C);
+            StringBuilder sk = new StringBuilder();
+            for(String n : C)
+            {
+                sk.append(n);
+            }
+            if(sk.toString().equals(sb.toString()))
+            {
+                response.add(i);
+            }
+        }
+        return response;
     }
 }
