@@ -1,9 +1,6 @@
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
-import org.omg.CORBA.INTERNAL;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import javax.annotation.processing.SupportedSourceVersion;
-import java.lang.reflect.Array;
+import org.omg.PortableInterceptor.INACTIVE;
+
 import java.util.*;
 
 public class Hashing {
@@ -468,5 +465,281 @@ public class Hashing {
             }
         }
         return response;
+    }
+
+
+    public static int maxPoints(ArrayList<Integer> a, ArrayList<Integer> b) {
+        int maxPoints = 0;
+        HashMap<Double, Integer> map = new HashMap<Double, Integer>();
+        if(a.size() != b.size() || a.size() == 0 || a == null || b.size() == 0 || b == null)
+            return maxPoints;
+        if(a.size() == 1 )
+            return 1;
+        for(int i = 0; i < a.size(); i++){
+            int duplicate = 1;
+            int vertical = 0;
+            int xi = a.get(i);
+            int yi = b.get(i);
+            for(int j = i+1; j < a.size(); j++){
+                int xj = a.get(j);
+                int yj = b.get(j);
+                if(xi == xj){
+                    if(yi == yj){
+                        duplicate++;
+                    }else{
+                        vertical++;
+                    }
+                }
+                else{
+                    double slope = 0.0;
+                    if(yj - yi == 0)
+                        slope = 0.0;
+                    else if(xj - xi == 0)
+                        slope = Double.MAX_VALUE;
+                    else
+                        slope = (double)(yj - yi) / (double)(xj - xi);
+
+                    if(map.containsKey(slope))
+                        map.put(slope, map.get(slope) + 1);
+                    else
+                        map.put(slope, 1);
+                }
+            }
+
+            for(int sl : map.values())
+                if(maxPoints < sl + duplicate)
+                    maxPoints = sl + duplicate;
+
+            maxPoints = Math.max(vertical + duplicate, maxPoints);
+            map.clear();
+        }
+
+
+        return maxPoints;
+    }
+
+    public static String fractionToDecimal(int A, int B) {
+        long x = A;
+        long y = B;
+        double possibleRem = Math.abs(x%y);
+        if(x%y==0)
+        {
+            return Long.toString(x/y);
+        }
+        else
+        {
+            double division = (double) x/(double) y;
+            String response = division+"";
+            int indDec = response.indexOf(".");
+            StringBuilder sb = new StringBuilder();
+            if(indDec>-1)
+            {
+                for(int i = indDec+1;i<response.length();)
+                {
+                    char m = response.charAt(i);
+                    int cnt = 0 ;
+                    for(int j = i+1 ; j < response.length() ; j++)
+                    {
+                        char n = response.charAt(j);
+                        if(n==m)
+                        {
+                            cnt++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if(cnt>0) {
+                        sb.append("(").append(m).append(")");
+                        i+=cnt;
+                    }
+                    else {
+                        sb.append(m);
+                        i++;
+                    }
+                }
+            }
+            StringBuilder t = new StringBuilder(response.substring(0,indDec+1));
+            t.append(sb);
+            return t.toString();
+        }
+    }
+
+
+    public static ArrayList<Integer> equal(ArrayList<Integer> A) {
+        if(A.isEmpty())
+        {
+            return new ArrayList<>();
+        }
+
+        ArrayList<Integer>responseList = new ArrayList<>();
+        Map<Integer,List<String>>sumIndexMap = new LinkedHashMap();
+        int i , j ;
+        int sum;
+        List<String>indexList ;
+        for(i = 0 ; i < A.size() ; i++)
+        {
+            for(j = i+1 ; j < A.size() ; j++)
+            {
+                sum = A.get(i) + A.get(j);
+                if(!sumIndexMap.containsKey(sum))
+                {
+                    indexList = new ArrayList<>();
+                }
+                else
+                {
+                    indexList = new ArrayList<>(sumIndexMap.get(sum));
+                }
+                indexList.add(i+"_"+j);
+                sumIndexMap.put(sum,indexList);
+            }
+        }
+
+        int a1 , b1 , c1 , d1;
+        boolean flag;
+
+       for(Map.Entry<Integer,List<String>> k : sumIndexMap.entrySet()){
+           if(k.getValue().size() > 1)
+           {
+               indexList = k.getValue();
+               String ab [] = indexList.get(0).split("_");
+               a1 = Integer.parseInt(ab[0]);
+               b1 = Integer.parseInt(ab[1]);
+               flag = false;
+               for(i = 1 ; i<indexList.size() ; i++)
+               {
+                   ab = indexList.get(i).split("_");
+                   c1 = Integer.parseInt(ab[0]);
+                   d1 = Integer.parseInt(ab[1]);
+
+                   if(a1 < b1 && c1 <  d1 && a1<c1 && b1!=d1 && b1!=c1)
+                   {
+                       responseList.addAll(Arrays.asList(a1,b1,c1,d1));
+                       flag = true;
+                       break;
+                   }
+               }
+               if(flag)
+               {
+                   break;
+               }
+           }
+       }
+        return responseList;
+
+    }
+
+    /**
+     * Determine if a Sudoku is valid, according to: http://sudoku.com.au/TheRules.aspx
+     *
+     * The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’.
+     * Return 0 / 1 ( 0 for false, 1 for true ) for this problem
+     * @param A
+     * @return
+     */
+    public static int isValidSudoku(final List<String> A) {
+
+        Map<Integer,Set> colSetMap = new HashMap<>();
+        Set<Integer>colSetN = new HashSet<>();
+        for(String row : A){
+            Set<Integer>numbers = new HashSet<>();
+            for(int i = 0 ; i < row.length() ; i++)
+            {
+                char test = row.charAt(i);
+                if(test!='.')
+                {
+                    int value = (test) - '0';
+                    if (value >=1 && value<=9)
+                    {
+                        if(!colSetMap.containsKey(i))
+                        {
+                            colSetN = new HashSet<>();
+                            colSetN.add(value);
+                            colSetMap.put(i,colSetN);
+                        }
+                        else
+                        {
+                            colSetN = colSetMap.get(i);
+                            if(colSetN.contains(value))
+                            {
+                                return 0;
+                            }
+                            else
+                            {
+                                colSetN.add(value);
+                            }
+                            colSetMap.put(i,colSetN);
+                        }
+                        if(!numbers.contains(value)){
+                            numbers.add(value);
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        for(int k = 0,z=0 ; k<9; z+=3)
+        {
+            if(z==9)
+            {
+                z=0;
+            }
+            String row1 = A.get(k).substring(z,z+3);
+
+            Set<Character>testu = new HashSet<>();
+            if(updateSet(row1,testu))
+            {
+                return 0;
+            }
+
+
+            row1 = A.get(k+1).substring(z,z+3);
+
+            if(updateSet(row1,testu))
+            {
+                return 0;
+            }
+
+
+            row1 = A.get(k+2).substring(z,z+3);
+            if(updateSet(row1,testu))
+            {
+                return 0;
+            }
+
+            if(z==6)
+            {
+                k+=3;
+            }
+        }
+        return 1;
+    }
+
+    private static boolean updateSet(String row , Set<Character>givenSet)
+    {
+        for(int l = 0 ; l <row.length() ; l++)
+        {
+            if(row.charAt(l)!='.')
+            {
+                if(!givenSet.contains(row.charAt(l)))
+                {
+                    givenSet.add(row.charAt(l));
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
