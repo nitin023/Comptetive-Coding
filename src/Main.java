@@ -5,6 +5,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        StringUtils.solve("ABEC");
+        StringUtils.isPalindrome("A12");
     }
 }

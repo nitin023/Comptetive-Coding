@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class StringUtils {
 
@@ -108,5 +105,98 @@ public class StringUtils {
             }
         }
         return response;
+    }
+
+    /**
+     * Palindrome String
+     * Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+     *
+     * Example
+     * A man, a plan, a canal: Panama" is a palindrome.
+     *
+     * "race a car" is not a palindrome.
+     *
+     * Return 0 / 1 ( 0 for false, 1 for true ) for this problem
+     * @param A
+     * @return
+     */
+
+    public static int isPalindrome(String A) {
+        if(A == null || A.isEmpty())
+        {
+            return 0;
+        }
+
+        A = A.toLowerCase();
+        //65 --122
+        char item;
+        int ascii;
+        StringBuilder sb = new StringBuilder();
+        Map<Character,Integer> charFreqMap = new HashMap<>();
+        for(int i = 0 ; i <A.length() ; i++)
+        {
+            item = A.charAt(i);
+            ascii = (int)item;
+
+            //valid alphabet
+            if(ascii>=97 && ascii<=122)
+            {
+                sb.append(item);
+                if(charFreqMap.containsKey(item))
+                {
+                    charFreqMap.put(item,charFreqMap.get(item)+1);
+                }
+                else
+                {
+                    charFreqMap.put(item,1);
+                }
+            }
+            else if(Character.isDigit(item))
+            {
+                sb.append(item);
+                if(charFreqMap.containsKey(item))
+                {
+                    charFreqMap.put(item,charFreqMap.get(item)+1);
+                }
+                else
+                {
+                    charFreqMap.put(item,1);
+                }
+            }
+        }
+
+        int strLen = sb.toString().length();
+        int oddFreCnt ;
+        if(strLen%2==0)
+        {
+            for(Map.Entry<Character,Integer> m : charFreqMap.entrySet())
+            {
+                int freq = m.getValue();
+                if(!(freq%2==0))
+                {
+                   return 0;
+                }
+            }
+            return 1;
+        }
+        else
+        {
+            oddFreCnt = 0;
+            for(Map.Entry<Character,Integer> m : charFreqMap.entrySet())
+            {
+                int freq = m.getValue();
+                if(!(freq%2==0))
+                {
+                    oddFreCnt++;
+                }
+            }
+            if(oddFreCnt==1) {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
