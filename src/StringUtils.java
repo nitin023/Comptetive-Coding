@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StringUtils {
 
@@ -49,5 +52,61 @@ public class StringUtils {
             prefix = updatedPrefix.toString();
         }
         return prefix;
+    }
+
+    /**
+     * Amazing Subarrays
+     *
+     * You are given a string S, and you have to find all the amazing substrings of S.
+     *
+     * Amazing Substring is one that starts with a vowel (a, e, i, o, u, A, E, I, O, U).
+     *
+     * Input
+     *
+     * Only argument given is string S.
+     *
+     * Return a single integer X mod 10003, here X is number of Amazing Substrings in given string.
+     *
+     *
+     * Input
+     *     ABEC
+     *
+     * Output
+     *     6
+     *
+     * Explanation
+     * 	Amazing substrings of given string are :
+     * 	1. A
+     * 	2. AB
+     * 	3. ABE
+     * 	4. ABEC
+     * 	5. E
+     * 	6. EC
+     * 	here number of substrings are 6 and 6 % 10003 = 6.
+     * @param A
+     * @return
+     */
+    public static int solve(String A) {
+        if(A.length()==0)
+        {
+            return 0;
+        }
+
+        //vowel index
+        Set<Character> vowelSet = new HashSet<>(Arrays.asList('a','e','i','o','u' , 'A' , 'E' , 'I' , 'O' , 'U'));
+        char currentChar ;
+        int response = 0;
+        for(int i = 0 ; i<A.length() ; i++)
+        {
+            currentChar = A.charAt(i);
+
+            //vowel test
+            if(vowelSet.contains(currentChar))
+            {
+                int currentIndexToEndLength = A.length() - i;
+                response=  (response +  currentIndexToEndLength) % 10003;
+            }
+        }
+        return response;
     }
 }
