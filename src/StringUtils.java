@@ -199,4 +199,80 @@ public class StringUtils {
             }
         }
     }
+
+    /**
+     * Given a string A representing a roman numeral.
+     * Convert A into integer.
+     *
+     * A is guaranteed to be within the range from 1 to 3999.
+     *
+     * Return an integer which is the integer verison of roman numeral string.
+     *
+     * For Example
+     *
+     * Input 1:
+     *     A = "XIV"
+     * Output 1:
+     *     14
+     *
+     * Input 2:
+     *     A = "XX"
+     * Output 2:
+     *     20
+     *
+     *  Algorithms says -
+     *  iterate given string char by char and if found current char greater than or equal to next char
+     *  then directly add the current char int value to the response
+     *
+     *  example c to x (decreasing order)
+     *
+     *  else
+     *  add only the diff of chars
+     *  example going from
+     * @param A
+     * @return
+     */
+    public static int romanToInt(String A) {
+
+        if(A==null || A.isEmpty())
+        {
+            return 0;
+        }
+
+        int i;
+        int response = 0;
+        char currentChar , nextChar;
+        int currVal , nextVal;
+        Map<Character,Integer> charToDecimalMap = new HashMap<>();
+        charToDecimalMap.put('I',1);
+        charToDecimalMap.put('V',5);
+        charToDecimalMap.put('X',10);
+        charToDecimalMap.put('L',50);
+        charToDecimalMap.put('C',100);
+        charToDecimalMap.put('D',500);
+        charToDecimalMap.put('M',1000);
+
+        for(i = 0 ; i<A.length()  ; i++)
+        {
+            currentChar = Character.toUpperCase(A.charAt(i));
+            currVal = charToDecimalMap.get(currentChar);
+            if(i+1 < A.length()) {
+                nextChar = Character.toUpperCase(A.charAt(i + 1));
+                nextVal = charToDecimalMap.get(nextChar);
+
+                if (currVal >= nextVal) {
+                    response += currVal;
+                } else {
+                    response += (nextVal - currVal);
+                    i++;
+                }
+            }
+            else {
+                response+=currVal;
+            }
+        }
+
+
+        return response;
+    }
 }
