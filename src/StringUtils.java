@@ -275,4 +275,135 @@ public class StringUtils {
 
         return response;
     }
+
+    /**
+     * Integer To Roman
+     * Given an integer A, convert it to a roman numeral, and return a string corresponding to its roman numeral version
+     * The only argument given is integer A.Return a string denoting roman numeral version of A.
+     *
+     * 1 <= A <= 3999
+     *
+     * Input 1:
+     *     A = 5
+     * Output 1:
+     *     "V"
+     *
+     * Input 2:
+     *     A = 14
+     * Output 2:
+     *     "XIV"
+     *
+     * @param A
+     * @return
+     */
+    public static String intToRoman(int A)
+    {
+        Map<Integer,String> charToDecimalMap = new HashMap<>();
+        charToDecimalMap.put(1,"I");
+        charToDecimalMap.put(2,"II");
+        charToDecimalMap.put(3,"III");
+        charToDecimalMap.put(4,"IV");
+        charToDecimalMap.put(5,"V");
+        charToDecimalMap.put(6,"VI");
+        charToDecimalMap.put(7,"VII");
+        charToDecimalMap.put(8,"VIII");
+
+        charToDecimalMap.put(10,"X");
+        charToDecimalMap.put(50,"L");
+        charToDecimalMap.put(100,"C");
+        charToDecimalMap.put(500,"D");
+        charToDecimalMap.put(1000,"M");
+         StringBuilder romanStrBuilder = new StringBuilder();
+         int dividingFactor = getDividingFactor(A);
+         if(dividingFactor==0)
+         {
+             return "M";
+         }
+
+         int quotient;
+         while (A>0)
+         {
+             quotient = A/dividingFactor;
+             int val = (quotient * dividingFactor);
+             String test = Integer.toString(A);
+             if(!test.startsWith("9")) {
+                 if(quotient==0 && A<9)
+                 {
+                     romanStrBuilder.append(charToDecimalMap.get(A));
+                     A = 0;
+                 }
+                 while (quotient != 0) {
+                     if(val >= 50 && val<90)
+                     {
+                         romanStrBuilder.append("L");
+                         A-=50;
+                         break;
+                     }
+                     else if(val >= 500 && val<900)
+                     {
+                         romanStrBuilder.append("D");
+                         A-=500;
+                         break;
+                     }
+                     else if(val == 40)
+                     {
+                         romanStrBuilder.append("XL");
+                         A-=val;
+                         break;
+                     }
+                     else if(val == 400)
+                     {
+                         romanStrBuilder.append("CD");
+                         A-=val;
+                         break;
+                     }
+                     romanStrBuilder.append(charToDecimalMap.get(dividingFactor));
+                     quotient--;
+                     A -= dividingFactor;
+                 }
+             }
+             else
+             {
+                 if(val == 9 || A==9)
+                 {
+                     if(A==9)
+                     {
+                         A = 0;
+                     }
+                     romanStrBuilder.append("IX");
+                 }
+                 else if(val==90)
+                 {
+                     romanStrBuilder.append("XC");
+                 }
+                 else if(val == 900)
+                 {
+                     romanStrBuilder.append("CM");
+                 }
+                 A-=val;
+             }
+             dividingFactor = getDividingFactor(A);
+         }
+         return romanStrBuilder.toString();
+    }
+
+    private static int getDividingFactor(int A)
+    {
+        int dividingFactor = 0;
+        if(A>0 && A<100)
+        {
+            dividingFactor = 10;
+        }
+
+        else if(A>99 && A<1000)
+        {
+            dividingFactor = 100;
+        }
+
+        else if(A>1000)
+        {
+            dividingFactor = 1000;
+        }
+        return dividingFactor;
+    }
 }

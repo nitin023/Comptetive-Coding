@@ -5,6 +5,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-       System.out.print(StringUtils.romanToInt("xviii"));
+       System.out.print(StringUtils.intToRoman(401));
     }
 }
