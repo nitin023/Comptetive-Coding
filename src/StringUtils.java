@@ -478,4 +478,45 @@ public class StringUtils {
 
         return isCarry ? "1" + sb1.toString() : sb1.toString();
     }
+
+    /**
+     * Implement StrStr
+     * Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+     * @param A
+     * @param B
+     * @return
+     */
+
+    public  static  int  strStr(final String A, final String B) {
+        int index = -1;
+
+        if(A.isEmpty() || B.isEmpty())
+        {
+            return index;
+        }
+
+        int cnt , ind;
+        for(int i = 0 ; i <A.length() ; i++)
+        {
+            cnt =  0;
+            ind = i;
+            for(int j = 0; j < B.length() && ind < A.length() ; j++)
+           {
+               if(A.charAt(ind) != B.charAt(j))
+               {
+                   break;
+               }
+               else
+               {
+                   cnt++;
+                   ind++;
+               }
+           }
+           if(cnt == B.length())
+           {
+               return i+1;
+           }
+        }
+        return index;
+    }
 }
