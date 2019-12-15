@@ -406,4 +406,76 @@ public class StringUtils {
         }
         return dividingFactor;
     }
+
+
+
+    /**
+     * Add Binary Strings
+     * Given two binary strings, return their sum (also a binary string).
+     *
+     * Example:
+     *
+     * a = "100"
+     *
+     * b = "11"
+     * Return a + b = “111”.
+     *
+     * using binary to long conversion can give overflow error so use string for addition
+     * @param A
+     * @param B
+     * @return
+     */
+
+    public static String addBinary(String A, String B) {
+
+        if (A == null || B == null || A.isEmpty() || B.isEmpty()) {
+            return "";
+        }
+
+        int lenA = A.length();
+        int lenB = B.length();
+
+        if(lenA>=lenB) {
+
+            return addAllBits(A,B,lenA,lenB);
+        }
+        else
+        {
+            return addAllBits(B,A,lenB,lenA);
+        }
+    }
+
+    private static String addAllBits(String A,String B ,int lenA , int lenB)
+    {
+        boolean isCarry = false;
+        StringBuilder sb1;
+        sb1 = new StringBuilder(A);
+        for (int i = lenA - 1, j = lenB - 1; i >= 0; i--, j--) {
+            char ai = A.charAt(i);
+            char bi = j >= 0 && j < lenB ? B.charAt(j) : '0';
+            //add bits
+            //both bits are 1
+            if (ai == bi && ai == '1') {
+                sb1.setCharAt(i, '0');
+                if (isCarry) {
+                    sb1.setCharAt(i, '1');
+                }
+                isCarry = true;
+            } else if (ai == '1' || bi == '1') {
+                sb1.setCharAt(i, '1');
+                if (isCarry) {
+                    sb1.setCharAt(i, '0');
+                    isCarry = true;
+                }
+            } else {
+                sb1.setCharAt(i, '0');
+                if (isCarry) {
+                    sb1.setCharAt(i, '1');
+                    isCarry = false;
+                }
+            }
+        }
+
+        return isCarry ? "1" + sb1.toString() : sb1.toString();
+    }
 }
