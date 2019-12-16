@@ -594,4 +594,79 @@ public class StringUtils {
             }
         }
     }
+
+    /**
+     * Zigzag String
+     *
+     * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
+     * (you may want to display this pattern in a fixed font for better legibility)
+     *
+     * P.......A........H.......N
+     * ..A..P....L....S....I...I....G
+     * ....Y.........I........R
+     *
+     * And then read line by line: PAHNAPLSIIGYIR
+     * Write the code that will take a string and make this conversion given a number of rows:
+     *
+     * string convert(string text, int nRows);
+     * convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR"
+     *
+     *
+     * @param A
+     * @param B
+     * @return
+     */
+    public static String convert(String A, int B) {
+        if(A==null ||A.isEmpty())
+        {
+            return "";
+        }
+
+        if(B==0 || B==1)
+        {
+            return A;
+        }
+
+        int rowMax = B;
+        int i , rMin = 0;
+       char item;
+
+        StringBuilder[] rowSb = new StringBuilder[rowMax];
+
+        for(i = 0 ; i < A.length() ; )
+        {
+            if(i==0)
+            {
+                rMin = 0;
+            }
+            else
+            {
+                rMin = 1;
+            }
+            while (i<A.length() && rMin < rowMax){
+                item = A.charAt(i);
+                if(rowSb[rMin]==null)
+                {
+                    rowSb[rMin] = new StringBuilder();
+                }
+                rowSb[rMin++].append(item);
+                i++;
+            }
+
+            rMin = rowMax - 2;
+            while (i<A.length() && rMin >=0)
+            {
+                item = A.charAt(i);
+                rowSb[rMin--].append(item);
+                i++;
+            }
+        }
+        StringBuilder response = new StringBuilder();
+        for(StringBuilder s : rowSb)
+        {
+            if(s!=null)
+            response.append(s);
+        }
+        return response.toString();
+    }
 }
