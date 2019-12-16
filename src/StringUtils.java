@@ -1,3 +1,5 @@
+import com.sun.javafx.image.BytePixelSetter;
+
 import java.util.*;
 
 public class StringUtils {
@@ -518,5 +520,78 @@ public class StringUtils {
            }
         }
         return index;
+    }
+
+    /**
+     * 
+     * @param A
+     * @return
+     */
+    public static int atoi(final String A) {
+
+
+        if (A.isEmpty()) {
+            return 0;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < A.length(); i++) {
+            char test = A.charAt(i);
+            if (i == 0) {
+                if (test == '+' || test == '-' || Character.isDigit(test)) {
+                    sb.append(test);
+                } else {
+                    return 0;
+                }
+            } else {
+                if (Character.isDigit(test)) {
+                    sb.append(test);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        if(sb.toString().isEmpty() || (sb.toString().length() == 1 && (sb.toString().equals("+") || sb.toString().equals("-"))))
+        {
+            return 0;
+        }
+
+        if(sb.toString().length() <=9)
+        {
+            return Integer.valueOf(sb.toString());
+        }
+        else
+        {
+            if(sb.toString().length() == 10)
+            {
+                if(sb.toString().startsWith("-") || sb.toString().startsWith("+"))
+                {
+                    return Integer.valueOf(sb.toString());
+                }
+
+                else
+                {
+                    if(sb.toString().startsWith("-"))
+                    {
+                        return Integer.MIN_VALUE;
+                    }
+                    else {
+                        return Integer.MAX_VALUE;
+                    }
+                }
+            }
+
+            else
+            {
+                if(sb.toString().startsWith("-"))
+                {
+                    return Integer.MIN_VALUE;
+                }
+                else {
+                    return Integer.MAX_VALUE;
+                }
+            }
+        }
     }
 }
