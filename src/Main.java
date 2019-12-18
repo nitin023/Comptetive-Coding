@@ -5,6 +5,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-       System.out.print(StringUtils.convert( "NX9AROO79WZSd",24 ));
+       System.out.print(StringUtils.isNumber( "1.e1"));
     }
 }

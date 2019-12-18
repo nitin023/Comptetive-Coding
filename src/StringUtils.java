@@ -410,7 +410,6 @@ public class StringUtils {
     }
 
 
-
     /**
      * Add Binary Strings
      * Given two binary strings, return their sum (also a binary string).
@@ -668,5 +667,132 @@ public class StringUtils {
             response.append(s);
         }
         return response.toString();
+    }
+
+
+    /**
+     * Validate if a given string is numeric.
+     *
+     * Examples:
+     *
+     * "0" => true
+     * " 0.1 " => true
+     * "abc" => false
+     * "1 a" => false
+     * "2e10" => true
+     * Return 0 / 1 ( 0 for false, 1 for true ) for this problem
+     *
+     * Is 1u ( which may be a representation for unsigned integers valid?
+     * For this problem, no.
+     * Is 0.1e10 valid?
+     * Yes
+     * -01.1e-10?
+     * Yes
+     * Hexadecimal numbers like 0xFF?
+     * Not for the purpose of this problem
+     * 3. (. not followed by a digit)?
+     * No
+     * Can exponent have decimal numbers? 3e0.1?
+     * Not for this problem.
+     * Is 1f ( floating point number with f as prefix ) valid?
+     * Not for this problem.
+     * How about 1000LL or 1000L ( C++ representation for long and long long numbers )?
+     * Not for this problem.
+     * How about integers preceded by 00 or 0? like 008?
+     * Yes for this problem
+     * @param A
+     * @return
+     */
+    public static int isNumber(final String A) {
+        if(A==null || A.isEmpty())
+        {
+            return 0;
+        }
+
+        String B = A.trim();
+        if(B.isEmpty())
+        {
+            return 0;
+        }
+        int decimalCnt = 0;
+        int eCnt = 0;
+        int nCnt = 0;
+        for(int i = 0 ; i <B.length() ; i++)
+        {
+            char a = B.charAt(i);
+            if(!Character.isDigit(a))
+            {
+                if(i==0 && a=='-')
+                {
+                    nCnt++;
+                }
+                else if(i==0 && Character.isAlphabetic(a))
+                {
+                    return 0;
+                }
+                else
+                {
+                    if(a=='.' && decimalCnt==0)
+                    {
+                        if(eCnt > 0)
+                        {
+                            return 0;
+                        }
+                        decimalCnt++;
+                    }
+                    else if(a=='.' && decimalCnt > 0)
+                    {
+                        return 0;
+                    }
+                    else if(a=='e' && eCnt==0)
+                    {
+                        if(B.charAt(i-1)=='.')
+                        {
+                            return 0;
+                        }
+                        eCnt++;
+                    }
+                    else if(a=='e' && eCnt>0)
+                    {
+                        return 0;
+                    }
+                    else if(a=='e' && B.charAt(i-1)=='-')
+                    {
+                        return 0;
+                    }
+                    else if(a=='e' && B.charAt(i-1)=='.')
+                    {
+                        return 0;
+                    }
+                    else if(eCnt > 0 && a=='.')
+                    {
+                        return 0;
+                    }
+                    else if(a=='-' && nCnt<=1)
+                    {
+                        nCnt++;
+                    }
+
+                    else {
+                        return 0;
+                    }
+                }
+            }
+        }
+        if(decimalCnt > 0)
+        {
+            if(!Character.isDigit(B.charAt(B.length() - 1)))
+            {
+                return 0;
+            }
+        }
+        if(eCnt > 0)
+        {
+            if(!Character.isDigit(B.charAt(B.length() - 1)))
+            {
+                return 0;
+            }
+        }
+        return 1;
     }
 }
